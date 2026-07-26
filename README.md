@@ -6,7 +6,7 @@ Enterprise-Grade Grounded RAG Platform
 
 A modular, high-precision Retrieval-Augmented Generation (RAG) platform designed to deliver verifiable, citation-backed answers across extensive document repositories. By fusing hybrid retrieval (dense semantic vectors + sparse keyword search), cross-encoder reranking, metadata filtering, and strict citation verification, the engine effectively eliminates hallucinations and ensures maximum answer reliability.
 
-While demonstrated here on clinical guideline datasets, the platform's core architecture is fully domain-agnostic—easily adaptable to legal, financial, technical, or corporate enterprise knowledge bases.
+While demonstrated here on clinical guideline datasets, the platform's core architecture is fully domain-agnostic easily adaptable to legal, financial, technical, or corporate enterprise knowledge bases.
 
 ---
 
