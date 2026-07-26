@@ -34,40 +34,40 @@ Replace these images with your screenshots.
 ### Home Page
 
 ```
-images/home.png
+images/home.svg
 ```
 
-![Home](images/home.png)
+![Home](images/home.svg)
 
 ---
 
 ### Question Answering
 
 ```
-images/query.png
+images/query.svg
 ```
 
-![Question Answering](images/query.png)
+![Question Answering](images/query.svg)
 
 ---
 
 ### Retrieved Citations
 
 ```
-images/results.png
+images/results.svg
 ```
 
-![Results](images/results.png)
+![Results](images/results.svg)
 
 ---
 
 ### Audit Trail
 
 ```
-images/audit.png
+images/audit.svg
 ```
 
-![Audit](images/audit.png)
+![Audit](images/audit.svg)
 
 ---
 
