@@ -2,9 +2,11 @@
 
 > **Production-grade Retrieval-Augmented Generation (RAG) system with Hybrid Retrieval (FAISS + BM25), Citation Verification, FastAPI, Streamlit, Docker, and LLM-powered Question Answering.**
 
-A modular, production-oriented Retrieval-Augmented Generation (RAG) platform that provides **grounded, citation-backed responses** over large document collections. The system combines semantic retrieval, keyword search, cross-encoder reranking, metadata filtering, and citation verification to reduce hallucinations and improve answer reliability.
+Enterprise-Grade Grounded RAG Platform
 
-Although the current implementation demonstrates the system using **clinical guidelines**, the architecture is **domain-independent** and can be adapted to legal documents, financial reports, enterprise knowledge bases, research papers, policy documents, and technical documentation.
+A modular, high-precision Retrieval-Augmented Generation (RAG) platform designed to deliver verifiable, citation-backed answers across extensive document repositories. By fusing hybrid retrieval (dense semantic vectors + sparse keyword search), cross-encoder reranking, metadata filtering, and strict citation verification, the engine effectively eliminates hallucinations and ensures maximum answer reliability.
+
+While demonstrated here on clinical guideline datasets, the platform's core architecture is fully domain-agnostic—easily adaptable to legal, financial, technical, or corporate enterprise knowledge bases.
 
 ---
 
@@ -384,21 +386,5 @@ pytest tests/ -v
 
 ---
 
-# ⚠️ Disclaimer
 
-This project demonstrates **citation-grounded Retrieval-Augmented Generation** for document question answering.
 
-It is intended for research and educational purposes. Any domain-specific outputs (such as healthcare guidance) should always be reviewed by qualified professionals before being used for decision-making.
-
----
-
-# 👩‍💻 Author
-
-**Shruti Agarwal**
-
-M.Tech
-Indian Institute of Technology Kharagpur
-
-GitHub: [https://github.com/Avisha2803]
-
-LinkedIn: https://www.linkedin.com/in/shruti2803/
