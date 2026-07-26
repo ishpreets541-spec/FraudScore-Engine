@@ -1,404 +1,138 @@
-# 🧠 Grounded RAG System
+# Agentic RAG with LlamaIndex
 
-> **Production-grade Retrieval-Augmented Generation (RAG) system with Hybrid Retrieval (FAISS + BM25), Citation Verification, FastAPI, Streamlit, Docker, and LLM-powered Question Answering.**
+A multi-document AI agent that can answer questions across multiple research papers using Retrieval-Augmented Generation (RAG). Built with LlamaIndex, Groq (LLaMA 3.1), and HuggingFace embeddings — no OpenAI required.
 
-A modular, production-oriented Retrieval-Augmented Generation (RAG) platform that provides **grounded, citation-backed responses** over large document collections. The system combines semantic retrieval, keyword search, cross-encoder reranking, metadata filtering, and citation verification to reduce hallucinations and improve answer reliability.
 
-Although the current implementation demonstrates the system using **clinical guidelines**, the architecture is **domain-independent** and can be adapted to legal documents, financial reports, enterprise knowledge bases, research papers, policy documents, and technical documentation.
+## What it does
 
----
+- Loads and indexes multiple research PDFs (MetaGPT, LongLoRA, Self-RAG, and more)
+- Gives the agent two tools per paper: a **vector search tool** (for specific questions) and a **summary tool** (for overviews)
+- Uses a **ReAct agent** that reasons step-by-step about which tool to use and when
+- Scales to 11+ papers using **ObjectIndex** for tool retrieval — the agent dynamically picks the right tools instead of loading all of them at once
 
-# 🚀 Features
 
-- Hybrid Retrieval (FAISS + BM25)
-- HuggingFace Medical-Domain Embeddings
-- CrossEncoder Re-ranking
-- Metadata-aware Retrieval
-- Citation Grounding & Verification
-- FastAPI REST API
-- Interactive Streamlit Interface
-- SQLite Audit Logging
-- Docker & Docker Compose Support
-- Modular and Production-ready Architecture
-
----
-
-# 📸 Demo
-
-## Streamlit Dashboard
-
-Replace these images with your screenshots.
-
-### Home Page
+## Demo queries
 
 ```
-images/home.png
+"Give me a summary of both Self-RAG and LongLoRA"
+"Tell me about the evaluation dataset used in LongLoRA and the results"
+"Compare and contrast LongLoRA and LoftQ — analyze the approach in each"
+"Tell me about the evaluation dataset in MetaGPT and compare it against SWE-Bench"
 ```
 
-![Home](images/home.png)
 
----
 
-### Question Answering
+## Tech stack
 
-```
-images/query.png
-```
+| Component | Tool |
+|---|---|
+| Framework | LlamaIndex (llama-index-core) |
+| LLM | Groq API — LLaMA 3.1 8B Instant |
+| Embeddings | HuggingFace — BAAI/bge-small-en-v1.5 (local, free) |
+| Agent type | ReAct Agent |
+| Vector store | In-memory VectorStoreIndex |
+| PDF loading | SimpleDirectoryReader |
 
-![Question Answering](images/query.png)
 
----
-
-### Retrieved Citations
-
-```
-images/results.png
-```
-
-![Results](images/results.png)
-
----
-
-### Audit Trail
+## Project structure
 
 ```
-images/audit.png
+├── Lesson1/L1_Router_Engine.ipynb
+├── Lesson2/L2_Tool_Calling.ipynb
+├── Lesson3/L3-Build_an_Agent_Reasoning_Loop.ipynb
+├── Lesson3/utils.py
+├── Lesson4/L4_Building_Multi_Document_Agent.ipynb
+├── Lesson4/utils.py
+└── .gitignore
 ```
 
-![Audit](images/audit.png)
 
----
+## Setup
 
-# 🏗️ System Architecture
-
-```
-                        User
-                         │
-                         ▼
-                Streamlit Frontend
-                         │
-                         ▼
-                  FastAPI Backend
-                         │
-        ┌────────────────────────────────┐
-        │ Authentication + Rate Limiting │
-        └────────────────────────────────┘
-                         │
-                         ▼
-                Hybrid Retrieval Engine
-             ┌──────────────┬──────────────┐
-             │              │              │
-             ▼              ▼              ▼
-          FAISS          BM25        Metadata Filter
-             └──────────────┬──────────────┘
-                            ▼
-                Reciprocal Rank Fusion
-                            ▼
-                 CrossEncoder Re-ranking
-                            ▼
-                   Grounded Prompt Builder
-                            ▼
-                       Large Language Model
-                            ▼
-                Citation Verification Engine
-                            ▼
-                     Structured JSON Response
-                            ▼
-                     SQLite Audit Logging
-```
-
----
-
-# ✨ Key Highlights
-
-Unlike many demo RAG projects, this system includes several production-oriented features.
-
-### Hybrid Retrieval
-
-Combines
-
-- Dense Retrieval (FAISS)
-- Sparse Retrieval (BM25)
-
-using Reciprocal Rank Fusion (RRF).
-
----
-
-### CrossEncoder Re-ranking
-
-Initial retrieval results are re-ranked using a CrossEncoder model to significantly improve retrieval quality.
-
----
-
-### Metadata Filtering
-
-Supports retrieval filtering using structured metadata such as
-
-- Source Organization
-- Document Type
-- Category
-- Version
-- Section
-- Page Number
-
----
-
-### Citation Verification
-
-Every generated citation is validated against the retrieved document metadata before being returned.
-
-This provides an additional safeguard against hallucinated references.
-
----
-
-### Audit Trail
-
-Every query records
-
-- User Question
-- Retrieved Documents
-- Citations
-- Grounding Score
-- Latency
-- Timestamp
-
-for traceability and debugging.
-
----
-
-# 🛠️ Technology Stack
-
-| Category | Technologies |
-|-----------|--------------|
-| Language | Python |
-| Backend | FastAPI |
-| Frontend | Streamlit |
-| Vector Database | FAISS |
-| Keyword Retrieval | BM25 |
-| Embeddings | HuggingFace Sentence Transformers |
-| Re-ranking | CrossEncoder |
-| LLM | Groq / OpenAI / Anthropic / Gemini / OpenRouter |
-| Database | SQLite |
-| Containerization | Docker |
-| Deployment | Docker Compose |
-
----
-
-# 📂 Project Structure
-
-```
-grounded-rag-system/
-
-├── app/
-│   ├── core/
-│   ├── middleware/
-│   ├── routers/
-│   ├── config.py
-│   ├── dependencies.py
-│   └── main.py
-│
-├── ingestion/
-│
-├── scripts/
-│
-├── streamlit_app/
-│
-├── tests/
-│
-├── Dockerfile
-├── docker-compose.yml
-├── requirements.txt
-└── README.md
-```
-
----
-
-# ⚙️ Installation
-
-## Clone Repository
-
+**1. Clone the repo**
 ```bash
-git clone https://github.com/YOUR_USERNAME/grounded-rag-system.git
-
-cd grounded-rag-system
+git clone https://github.com/prithvi174/Agentic-Rag-llamaIndex.git
+cd Agentic-Rag-llamaIndex
 ```
 
----
-
-## Create Virtual Environment
-
+**2. Install dependencies**
 ```bash
-python -m venv venv
+pip install llama-index llama-index-llms-groq llama-index-embeddings-huggingface groq python-dotenv nest_asyncio
 ```
 
-Windows
+**3. Add your Groq API key**
 
-```bash
-venv\Scripts\activate
+Create a `.env` file in each lesson folder:
+```
+GROQ_API_KEY=your_key_here
 ```
 
-Linux / Mac
+Get a free key at [console.groq.com](https://console.groq.com)
 
-```bash
-source venv/bin/activate
-```
+**4. Add research PDFs**
 
----
+Place the required PDFs in each lesson folder. The notebooks expect files like `metagpt.pdf`, `longlora.pdf`, `selfrag.pdf` etc.
 
-## Install Dependencies
+**5. Run the notebooks**
 
-```bash
-pip install -r requirements.txt
-```
+Open in Jupyter and run all cells.
 
----
 
-# 🔑 Environment Variables
+## How it works
 
-Create
+### Tool creation (utils.py)
 
-```
-.env
-```
+For each PDF, `get_doc_tools()` creates two tools:
 
-Example
+- `vector_tool_{name}` — embeds chunks locally, retrieves top-2 similar chunks for specific questions
+- `summary_tool_{name}` — reads the full document and summarizes using tree_summarize mode
 
-```env
-LLM_PROVIDER=groq
+### Agent reasoning (ReAct loop)
 
-GROQ_API_KEY=YOUR_KEY
+The agent iteratively:
+1. Thinks about what information it needs
+2. Picks the right tool
+3. Calls the tool and gets a result
+4. Reasons over the result and decides next steps
+5. Repeats until it has a complete answer
 
-LLM_MODEL=llama-3.3-70b-versatile
+### Scaling to 11 papers (ObjectIndex)
 
-EMBEDDING_MODEL=BAAI/bge-small-en-v1.5
+With 22 tools (2 per paper × 11 papers), an `ObjectIndex` embeds the tool descriptions and retrieves only the top-3 relevant tools per query — the agent never sees tools it doesn't need.
 
-TOP_K=5
 
-SCORE_THRESHOLD=0.35
-```
+## Key concepts
 
----
+- RAG pipeline — chunking, embedding, vector search, generation
+- Tool calling — wrapping query engines as callable agent tools
+- ReAct reasoning — Thought → Action → Observation loop
+- Multi-document agents — routing queries across many knowledge sources
+- Tool retrieval — vector search on tool descriptions to scale agent tool usage
 
-# 📄 Add Documents
 
-Place PDFs inside
+## Notes
 
-```
-data/raw_guidelines/
-```
+- Free Groq tier has rate limits — `llama-3.1-8b-instant` works best
+- Embeddings run locally via HuggingFace — no embedding API costs
+- Based on the DeepLearning.AI "Building Agentic RAG with LlamaIndex" course
 
-Then build the vector index.
 
-```bash
-python -m ingestion.build_index
-```
 
----
+## Research Papers Used
 
-# ▶️ Run Backend
+Download and place in the respective lesson folders:
 
-```bash
-uvicorn app.main:app --reload
-```
+| Paper | Link |
+|---|---|
+| MetaGPT | https://openreview.net/pdf?id=VtmBAGCN7o |
+| LongLoRA | https://openreview.net/pdf?id=6PmJoRfdaK |
+| Self-RAG | https://openreview.net/pdf?id=hSyW5go0v8 |
+| LoftQ | https://openreview.net/pdf?id=LzPWWPAdY4 |
+| SWE-Bench | https://openreview.net/pdf?id=VTF8yNQM66 |
+| Zipformer | https://openreview.net/pdf?id=9WD9KwssyT |
+| Values in the Wild | https://openreview.net/pdf?id=yV6fD7LYkF |
+| Finetuning Fair Diffusion | https://openreview.net/pdf?id=hnrB5YHoYu |
+| Knowledge Card | https://openreview.net/pdf?id=WbWtOYIzIK |
+| METRA | https://openreview.net/pdf?id=c5pwL0Soay |
+| VR-MCL | https://openreview.net/pdf?id=TpD2aG1h0D |
 
-API Documentation
-
-```
-http://localhost:8000/docs
-```
-
----
-
-# ▶️ Run Streamlit
-
-```bash
-streamlit run streamlit_app/app.py
-```
-
-Open
-
-```
-http://localhost:8501
-```
-
----
-
-# 🐳 Docker
-
-Build and run
-
-```bash
-docker compose up --build
-```
-
----
-
-# 🔍 Example Query
-
-```
-What are the WHO recommendations for hypertension treatment?
-```
-
----
-
-# 📈 API Response
-
-```json
-{
-  "answer": "...",
-  "citations": [
-    {
-      "source_org": "WHO",
-      "page": 18,
-      "section": "Treatment Recommendations"
-    }
-  ],
-  "grounding_verified": true,
-  "grounding_score": 1.0,
-  "latency_ms": 842
-}
-```
-
----
-
-# 🧪 Running Tests
-
-```bash
-pytest tests/ -v
-```
-
----
-
-# 🔮 Future Improvements
-
-- Multi-Query Retrieval
-- Context Compression
-- Adaptive Top-K Retrieval
-- Redis Rate Limiting
-- PostgreSQL Audit Database
-- OAuth2 Authentication
-- Retrieval Evaluation Dashboard
-- Kubernetes Deployment
-- CI/CD Pipeline
-- Multi-modal Document Support
-
----
-
-# ⚠️ Disclaimer
-
-This project demonstrates **citation-grounded Retrieval-Augmented Generation** for document question answering.
-
-It is intended for research and educational purposes. Any domain-specific outputs (such as healthcare guidance) should always be reviewed by qualified professionals before being used for decision-making.
-
----
-
-# 👩‍💻 Author
-
-**Shruti Agarwal**
-
-M.Tech
-Indian Institute of Technology Kharagpur
-
-GitHub: [https://github.com/Avisha2803]
-
-LinkedIn: https://www.linkedin.com/in/shruti2803/
