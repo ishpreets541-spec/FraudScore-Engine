@@ -386,5 +386,13 @@ pytest tests/ -v
 
 ---
 
+## Contributors
+
+This project acknowledges the following contributors. See [CONTRIBUTORS.md](CONTRIBUTORS.md) for details.
+
+- prithvi174
+- ishpreet
+
+
 
 
