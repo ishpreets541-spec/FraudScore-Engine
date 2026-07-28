@@ -150,3 +150,12 @@ This enables:
 - Synthetic dataset referenced via Kaggle
 - Model artifacts packaged within Docker images
 - Focus on reproducibility and deployment realism
+
+  # 👩‍💻 Author
+
+**Ishpreet Singh**
+
+M.Tech
+Indian Institute of Technology Bombay
+Mail ID:
+25m0326@iitb.ac.in
